@@ -1,4 +1,3 @@
-package com.company;
 /*
    Implementacao do Jantar dos Filosofos com Semaforo
    PUCRS - Escola Politecnica
