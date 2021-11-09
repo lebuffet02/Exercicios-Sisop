@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 class SantaProblem {
   final static int MAX_REINDEERS = 9;
-  final static int MAX_ELVES = 12;
+  final static int MAX_ELVES = 30;
 
   public static void main(String[] args) {
     AtomicInteger elves = new AtomicInteger(0);
@@ -19,14 +19,14 @@ class SantaProblem {
     Santa santa = new Santa(elves, reindeers, santaSem, reindeerSem, mutex);
     threads.add(santa);
 
-    for (int i = 0; i < MAX_ELVES; i++) {
-      Elf elf = new Elf(elves, elfTex, mutex, santaSem, i + 1);
-      threads.add(elf);
-    }
-
     for (int i = 0; i < MAX_REINDEERS; i++) {
       Reindeer reindeer = new Reindeer(reindeers, santaSem, reindeerSem, mutex, i + 1);
       threads.add(reindeer);
+    }
+
+    for (int i = 0; i < MAX_ELVES; i++) {
+      Elf elf = new Elf(elves, elfTex, mutex, santaSem, i + 1);
+      threads.add(elf);
     }
 
     for (Thread t : threads) {

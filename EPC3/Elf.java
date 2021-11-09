@@ -20,29 +20,28 @@ class Elf extends Thread {
 
   public void run() {
     try {
-      while (true) {
-        elfTex.acquire();
-        mutex.acquire();
+      elfTex.acquire();
+      mutex.acquire();
 
-        int currentElves = elves.incrementAndGet();
-        if (currentElves == 3) {
-          santaSem.release();
-        } else {
-          elfTex.release();
-        }
-        mutex.release();
-
-        this.getHelp();
-
-        mutex.acquire();
-
-        currentElves = elves.decrementAndGet();
-        if (currentElves == 0) {
-          elfTex.release();
-        }
-
-        mutex.release();
+      int currentElves = elves.incrementAndGet();
+      if (currentElves == 3) {
+        santaSem.release();
+      } else {
+        elfTex.release();
       }
-    } catch (Exception e) {}
+      mutex.release();
+
+      this.getHelp();
+
+      mutex.acquire();
+
+      currentElves = elves.decrementAndGet();
+      if (currentElves == 0) {
+        elfTex.release();
+      }
+
+      mutex.release();
+    } catch (Exception e) {
+    }
   }
 }

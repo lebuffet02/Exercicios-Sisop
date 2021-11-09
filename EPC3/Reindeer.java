@@ -19,21 +19,20 @@ class Reindeer extends Thread {
   }
 
   public void run() {
-    while (true) {
-      try {
-        mutex.acquire();
+    try {
+      mutex.acquire();
 
-        int currentReindeers = reindeer.incrementAndGet();
-        if (currentReindeers == 9) {
-          santaSem.release();
-        }
+      int currentReindeers = reindeer.incrementAndGet();
+      if (currentReindeers == 9) {
+        santaSem.release();
+      }
 
-        mutex.release();
+      mutex.release();
 
-        reindeerSem.acquire();
+      reindeerSem.acquire();
 
-        this.getHitched();
-      } catch (Exception e) {}
+      this.getHitched();
+    } catch (Exception e) {
     }
   }
 }
